@@ -1,35 +1,33 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { createContext } from "use-context-selector";
+import { GitHubIssue } from "../typings/types";
 
 interface PostProviderProps {
   children: React.ReactNode;
 }
 
 interface PostContextType {
-  posts: Array<Post>;
-}
-
-interface Post {
-  userId: number;
-  id: number;
-  title: string;
-  body: string;
+  posts: Array<GitHubIssue>;
 }
 
 export const PostContext = createContext({} as PostContextType);
 
 function PostProvider(props: PostProviderProps) {
   const { children } = props;
-  const [posts, setPosts] = useState<Array<Post>>([]);
+  const [posts, setPosts] = useState<Array<GitHubIssue>>([]);
+  const repo = "conniepaula/github-blog";
 
-  const fetchPosts = async () => {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts",
-    );
-    response.data;
+  const fetchPosts = async (query: string = "") => {
+    const response = await axios.get(`https://api.github.com/search/issues`, {
+      params: {
+        q: `${query || ""} repo:${repo}`,
+        sort: "updated",
+        order: "desc",
+      },
+    });
     console.log(response.data);
-    setPosts(response.data);
+    setPosts(response.data.items);
   };
 
   React.useEffect(() => {

@@ -33,6 +33,7 @@ function Card(props: DetailsProps) {
   );
 }
 
+// TODO: Create Typography component with multiple variants and flexible styling
 function Title(props: ParentProps) {
   const { children } = props;
   return <h2 className="text-2xl font-bold leading-tight">{children}</h2>;
@@ -47,7 +48,9 @@ function Subtitle(props: ParentProps) {
 
 function Description(props: ParentProps) {
   const { children } = props;
-  return <span className="text-md text-neutral-300">{children}</span>;
+  return (
+    <span className="text-md line-clamp-5 text-neutral-300">{children}</span>
+  );
 }
 
 function Text(props: ParentProps) {

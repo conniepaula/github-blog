@@ -8,7 +8,7 @@ function Container(props: ContainerProps) {
   const { children } = props;
   return (
     <html lang="en">
-      <div className="flex h-screen flex-col items-center">{children}</div>
+      <div className="flex h-screen flex-col">{children}</div>
     </html>
   );
 }
